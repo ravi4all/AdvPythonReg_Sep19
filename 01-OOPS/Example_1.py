@@ -45,7 +45,22 @@ class Emp():
             print("Login Failed")
 
     def salary(self):
-        pass
+        basicSalary = int(input("Enter your salary"))
+        da = 0.10 * basicSalary
+        hra = 0.50 * basicSalary
+        ca = 0.040 * basicSalary
+        ma = 0.11 * basicSalary
+        sa = 0.70 * basicSalary
+        tax = 0.005 * basicSalary
+        tds = 0.25 * basicSalary
+        pf = 0.12 * basicSalary
+
+        earning = basicSalary + da + hra + ca + sa + ma
+        deduction = tax + tds + pf
+        net =earning - deduction
+        print("Earnings",earning)
+        print("Deduction",deduction)
+        print("Net salary is",net)
 
     def viewEmp(self):
         pass
