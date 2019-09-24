@@ -1,4 +1,5 @@
 from model import playList
+from model import database
 
 class Song():
 
@@ -29,7 +30,9 @@ def searchSong(name):
             return playlist[i]
 
 def savePlaylist():
-    playList.save(playlist)
+    for obj in playlist:
+        song,singer,movie = str(obj).split(",")
+        database.insert(song,singer,movie)
 
 def loadList():
     playList.load()
