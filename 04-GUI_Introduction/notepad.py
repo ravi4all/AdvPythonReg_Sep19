@@ -1,4 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QShortcut
+from PyQt5.QtGui import QKeySequence
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -76,6 +78,23 @@ class Ui_MainWindow(object):
         self.actionPaste.setText(_translate("MainWindow", "Paste"))
         self.actionTheme.setText(_translate("MainWindow", "Theme"))
         self.actionFont.setText(_translate("MainWindow", "Font"))
+
+        self.actionOpen_2.setShortcut('Ctrl+o')
+        self.actionOpen.setShortcut('Ctrl+n')
+        self.actionSave.setShortcut('Ctrl+s')
+        self.actionSave_AS.setShortcut('Ctrl+s')
+        self.actionClose.setShortcut("Alt+f4")
+
+        self.actionOpen_2.triggered.connect(self.openFile)
+
+    def openFile(self):
+        print("Opening File")
+        box = QtWidgets.QFileDialog.getOpenFileName()
+        filePath = box[0]
+        file = open(filePath)
+        data = file.read()
+        self.textEdit.setText(data)
+        file.close()
 
 
 if __name__ == "__main__":
