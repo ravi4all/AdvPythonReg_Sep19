@@ -1,4 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMessageBox
 
 import pymysql
 
@@ -7,8 +8,10 @@ connection = pymysql.connect(host='localhost',port=3306,user='root',
 
 cursor = connection.cursor()
 
-class Ui_MainWindow(object):
+class Ui_MainWindow(QtWidgets.QMainWindow):
     loggedInUser = ""
+    def __init__(self):
+        super().__init__()
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1190, 736)
@@ -511,6 +514,13 @@ class Ui_MainWindow(object):
         self.pushButton_2.clicked.connect(self.loginFrame)
 
         self.pushButton_3.clicked.connect(self.register)
+        self.pushButton_4.clicked.connect(self.login)
+
+        self.pushButton_5.clicked.connect(self.studentLoggedIn)
+        self.pushButton_6.clicked.connect(self.teacherLoggedIn)
+
+        self.pushButton_7.clicked.connect(self.startTest)
+        self.pushButton_8.clicked.connect(self.insertQues)
 
     def registerFrame(self):
         self.frame.show()
@@ -521,7 +531,78 @@ class Ui_MainWindow(object):
         self.frame_3.hide()
 
     def login(self):
-        pass
+        try:
+            login_id = self.lineEdit_5.text()
+            login_pwd = int(self.lineEdit_4.text())
+            category = self.comboBox_2.currentText()
+            print(login_id,login_pwd,category)
+            query = "select * from users where id = %s and pwd = %s and category = %s"
+            cursor.execute(query, (login_id,login_pwd,category))
+            data = cursor.fetchall()
+            print(data)
+            if cursor.rowcount > 0:
+                self.loggedInFrame(category)
+            else: print("Login Failed...")
+        except BaseException as ex:
+            print(ex)
+
+    def loggedInFrame(self,category):
+        if category == "Student":
+            self.frame_3.show()
+            self.frame_4.hide()
+        else:
+            self.frame_3.show()
+            self.frame_5.hide()
+
+    def studentLoggedIn(self):
+        self.frame_4.show()
+        self.frame_6.hide()
+
+    def teacherLoggedIn(self):
+        self.frame_5.show()
+        self.frame_7.hide()
+
+    def startTest(self):
+        self.frame_6.show()
+        self.frame_8.hide()
+        self.showQuestion()
+
+    def showQuestion(self):
+        subject = self.comboBox_6.currentText()
+        query = "select * from questions where subject = %s"
+        cursor.execute(query,subject)
+        questions = cursor.fetchall()
+        for i in range(len(questions)):
+            ques = questions[i][0]
+            opt_1 = questions[i][1]
+            opt_2 = questions[i][2]
+            opt_3 = questions[i][3]
+            opt_4 = questions[i][4]
+            self.label_31.setText(ques)
+            self.radioButton.setText(opt_1)
+            self.radioButton_2.setText(opt_2)
+            self.radioButton_3.setText(opt_3)
+            self.radioButton_4.setText(opt_4)
+
+    def insertQues(self):
+        ques = self.textEdit.toPlainText()
+        option_1 = self.lineEdit_6.text()
+        option_2 = self.lineEdit_7.text()
+        option_3 = self.lineEdit_8.text()
+        option_4 = self.lineEdit_9.text()
+        ans = self.lineEdit_10.text()
+        subject = self.comboBox_5.currentText()
+        query = "insert into questions values (%s,%s,%s,%s,%s,%s,%s)"
+        cursor.execute(query, (ques,option_1,option_2,option_3,option_4,ans,subject))
+        QMessageBox.about(self, "Success", 'Data Inserted Successfully...')
+
+        self.textEdit.setText("")
+        self.lineEdit_6.setText("")
+        self.lineEdit_7.setText("")
+        self.lineEdit_8.setText("")
+        self.lineEdit_9.setText("")
+        self.lineEdit_10.setText("")
+
 
     def register(self):
         name = self.lineEdit.text()
@@ -533,7 +614,11 @@ class Ui_MainWindow(object):
 
         query = "insert into users values (%s,%s,%s,%s,%s,%s)"
         cursor.execute(query,(name,id,pwd,course,sem,self.loggedInUser))
-        print("Data Inserted Successfully....")
+        # print("Data Inserted Successfully....")
+        QMessageBox.about(self,"Success",'Data Inserted Successfully...')
+        self.lineEdit.setText("")
+        self.lineEdit_2.setText("")
+        self.lineEdit_3.setText("")
 
 
 if __name__ == "__main__":
