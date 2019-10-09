@@ -1,0 +1,5 @@
+01-create a your project folder
+02-create a folder cgi-bin inside your project
+03-all python files will only be created inside cgi-bin
+04-all html files will be outside cgi-bin
+05-open cmd and type -> python -m http.server --cgi 9898
