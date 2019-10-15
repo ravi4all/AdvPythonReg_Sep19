@@ -1,4 +1,5 @@
 import pymysql
+import cgi
 import base
 
 connection = pymysql.connect(host='localhost',port=3306,user='root',
@@ -6,8 +7,12 @@ connection = pymysql.connect(host='localhost',port=3306,user='root',
 
 cursor = connection.cursor()
 
-query = "select * from products"
+form = cgi.FieldStorage()
+product = form.getvalue('searchValue')
+
+query = "select * from products where p_name LIKE '%{}%' or p_category = '{}' or p_brand = '{}'".format(product,product,product)
 cursor.execute(query)
+
 data = cursor.fetchall()
 
 print("""
@@ -28,11 +33,7 @@ print("""
         }
         .product {
             border: 1px solid #eee;
-            margin-bottom: 20px;
-            margin-right: 7px;
-        }
-        .carousel-inner img {
-            height : 400px;
+            margin: 10px;
         }
     </style>
   </head>
@@ -41,58 +42,24 @@ print("""
 base.header()
 
 print("""
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-  <ol class="carousel-indicators">
-    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-  </ol>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="https://www.carloisles.com/project-cms/wp-content/uploads/2014/09/Shop-Online-Made-Easy-in-the-Philippines.gif" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="http://blog.cubber.in/wp-content/uploads/2017/10/Amazon-Great-Indian-Diwali-Festival-Sale-for-Online-Shopping-Through-Cubber.jpg" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="https://media.gettyimages.com/vectors/sale-banner-and-vector-of-online-shop-vector-id622202466" class="d-block w-100" alt="...">
-    </div>
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
-""")
-
-print("""
 <div class="container">
-    <h2 class='text-center'>
-        All Products
-    </h2>
-    <hr>
     <div class='row' style='align-items:stretch;'>
 """)
 
 for i in range(3):
     for i in range(len(data)):
-        discount = data[i][2] + 5000
         print("""
         <div class='col-md-3 product'>
             <div class="card">
             <img src="{}" class="card-img-top" alt="..." style='min-height:300px;max-height:350px'>
             <div class="card-body">
                 <h5 class="card-title">{}</h5>
-                <p class="card-text">Price : {} Rs <del>{}</del></p>
-                <a href="details.py?id={}" class="btn btn-primary w-100">View Details</a>
+                <p class="card-text">{}</p>
+                <a href="details.py?id={}" class="btn btn-primary">Details</a>
           </div>
         </div>
         </div>
-        """.format(data[i][3],data[i][1],data[i][2],discount,data[i][0]))
+        """.format(data[i][3],data[i][1],data[i][2],data[i][0]))
 
 print("""
     <!-- Optional JavaScript -->
