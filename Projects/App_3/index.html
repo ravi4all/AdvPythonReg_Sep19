@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+
+    <div class="container">
+        <h2>Registration Form</h2>
+        <hr>
+        <div id="regsitration">
+        <form action="cgi-bin/register.py" method="post">
+            <table>
+                <tr>
+                    <td>Enter your name</td>
+                    <td>
+                        <input type="text" placeholder="Enter name" name="user_name">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Enter your ID</td>
+                    <td>
+                        <input type="text" placeholder="Enter id" name="user_id">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Enter your Password</td>
+                    <td>
+                        <input type="password" placeholder="Enter password" name="user_pwd">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Select Course</td>
+                    <td>
+                        <select name="course">
+                            <option value="bca">BCA</option>
+                            <option value="bba">BBA</option>
+                            <option value="btech">Btech</option>
+                            <option value="mtech">Mtech</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Select Course</td>
+                    <td>
+                        <select name="sem">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Select Category</td>
+                    <td>
+                        <select name="course">
+                            <option value="teacher">Teacher</option>
+                            <option value="student">Student</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="reset">
+                    </td>
+                    <td>
+                        <input type="submit" value="Register">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+        <hr>
+        <h2>Login Form</h2>
+        <hr>
+
+        <div id="login">
+        <form action="cgi-bin/loggedIn.py" method="post">
+            <table>
+                <tr>
+                    <td>Enter your email</td>
+                    <td>
+                        <input type="email" placeholder="Enter email" name="user_mail">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Enter your Password</td>
+                    <td>
+                        <input type="password" placeholder="Enter password" name="user_pwd">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="reset">
+                    </td>
+                    <td>
+                        <input type="submit" value="Register">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+        </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
