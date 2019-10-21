@@ -3,6 +3,22 @@ import model
 
 quesData = model.getQuestions()
 
+questions = {
+  "ques":{
+    x : quesData[x] for x in range(len(quesData))
+  }
+}
+
+form = cgi.FieldStorage()
+
+if not form.getvalue('q_id'):
+  q_id = 0
+else:
+  q_id = int(form.getvalue('q_id'))
+  q_id += 1
+
+current_ques = questions['ques'][q_id]
+
 print("""
 <!doctype html>
 <html lang="en">
@@ -29,29 +45,29 @@ print("""
   <div class='container'>
     <h2>Questions</h2>
     <hr>
-    <form action='resultView.py' method='post'>
-    <ul class='list-group'>
-  """)
-
-for i in range(len(quesData)):
-    print("""
-        <li class='list-group-item'>
-            <p>{}. {}</p>
-            <p><input type='radio' value={} name='ans_{}'> {}</p>
-            <p><input type='radio' value={} name='ans_{}'> {}</p>
-            <p><input type='radio' value={} name='ans_{}'> {}</p>
-            <p><input type='radio' value={} name='ans_{}'> {}</p>
-        </li>
-    """.format(i+1,quesData[i][0],
-               quesData[i][1], i+1, quesData[i][1],
-               quesData[i][2],i+1, quesData[i][2],
-               quesData[i][3],i+1, quesData[i][3],
-               quesData[i][4],i+1, quesData[i][4]))
+""")
 
 print("""
-</form>
-<br>
-<button class='btn btn-primary'>Submit Test</button>
+<form action='testView.py' method='post'>
+<h5>{}</h5>
+<input type='hidden' value={} name='q_id'>
+""".format(current_ques[0], q_id))
+print("<ul class='list-groupd'>")
+for i in range(1,5):
+  print("""<li class='list-group-item'>
+    <input type='radio' name='ans' value={}> {}</li>
+  """.format(current_ques[i],current_ques[i]))
+print("</ul>")
+
+if q_id == len(quesData) - 1:
+  submit_btn_state = ''
+  next_btn_state = 'disabled'
+else:
+  submit_btn_state = 'disabled'
+  next_btn_state = ''
+print("<button class='btn btn-primary' {}>Next Question</button>".format(next_btn_state))
+print("<button class='btn btn-primary disable-btn' {}>Submit</button>".format(submit_btn_state))
+print("""
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
