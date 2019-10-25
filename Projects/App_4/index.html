@@ -16,7 +16,7 @@
         <h2>Registration Form</h2>
         <hr>
         <div id="regsitration">
-        <form action="cgi-bin/register.py" method="post">
+        <form action="cgi-bin/register.py" method="post" enctype="multipart/form-data">
             <table>
                 <tr>
                     <td>Enter your name</td>
@@ -48,7 +48,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Select Course</td>
+                    <td>Select Sem</td>
                     <td>
                         <select name="sem">
                             <option value="1">1</option>
@@ -61,10 +61,16 @@
                 <tr>
                     <td>Select Category</td>
                     <td>
-                        <select name="course">
+                        <select name="cat">
                             <option value="teacher">Teacher</option>
                             <option value="student">Student</option>
                         </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Upload Profile Pic</td>
+                    <td>
+                        <input type="file" name="profile">
                     </td>
                 </tr>
                 <tr>
@@ -86,9 +92,9 @@
         <form action="cgi-bin/loggedIn.py" method="post">
             <table>
                 <tr>
-                    <td>Enter your email</td>
+                    <td>Enter your ID</td>
                     <td>
-                        <input type="email" placeholder="Enter email" name="user_mail">
+                        <input type="text" placeholder="Enter user_id" name="user_id">
                     </td>
                 </tr>
                 <tr>
@@ -102,7 +108,7 @@
                         <input type="reset">
                     </td>
                     <td>
-                        <input type="submit" value="Register">
+                        <input type="submit" value="Login Now">
                     </td>
                 </tr>
             </table>
